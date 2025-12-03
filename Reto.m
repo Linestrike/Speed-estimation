@@ -1,3 +1,6 @@
+% hw = targetHardware('Raspberry Pi')
+% deploy(hw,'Reto')
+
 function Reto() %#codegen
     r = raspi('10.235.18.39','nogada','123456');
     cam = webcam(r, 1, "320x240");
@@ -33,7 +36,6 @@ function Reto() %#codegen
         
         stats = regionprops(bwFrame, 'Area');
         
-        % Si detectamos algo mayor a 500px, rompemos el bucle
         if ~isempty(stats)
             if max([stats.Area]) > 500
                 fprintf('Movimiento detectado\n');
@@ -60,7 +62,6 @@ while frameCount <= numFrames
     stats = regionprops(bwFrame, 'BoundingBox', 'Area', 'Centroid');
 
     if ~isempty(stats)
-        % Encuentra objeto
         [maxArea, idx] = max([stats.Area]);
         
         if maxArea > 500
@@ -103,3 +104,4 @@ else
     fprintf('Velocidad %.2f km/h\n', speed_kmh);
     
 end
+
